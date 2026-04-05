@@ -18,7 +18,7 @@ RUN cp -r /root/.local/bin /home/appuser/.local && \
 USER appuser
 WORKDIR /app
 RUN git clone https://github.com/brizenchi/openclaw-claude-bridge.git . && \
-    npm install --production
+    npm install
 
 # Skip onboarding (appuser's home)
 RUN echo '{"hasCompletedOnboarding":true}' > /home/appuser/.claude.json
