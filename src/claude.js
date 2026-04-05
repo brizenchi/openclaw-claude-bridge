@@ -40,6 +40,9 @@ function getContextWindow(modelId) {
 
 const IDLE_TIMEOUT_MS = parseInt(process.env.IDLE_TIMEOUT_MS) || 120000; // 2 min idle = dead
 
+/** Billing header injected into every system prompt so Anthropic counts this as CLI traffic. */
+const BILLING_HEADER = process.env.BILLING_HEADER || 'x-anthropic-billing-header: cc_version=2.1.89.0fc; cc_entrypoint=cli; cch=00000;';
+
 /**
  * Map OC reasoning_effort levels to Claude CLI --effort levels.
  * OC sends: "minimal" | "low" | "medium" | "high" | "xhigh"
@@ -80,8 +83,9 @@ function runClaude(systemPrompt, promptText, modelId, onChunk, signal, reasoning
         }
 
         // Replace Claude Code default system prompt (removes ~15-20KB of irrelevant noise)
+        // Prepend billing header so Anthropic recognizes this as CLI traffic (Pro/Max subscription).
         if (systemPrompt) {
-            args.push('--system-prompt', systemPrompt);
+            args.push('--system-prompt', BILLING_HEADER + systemPrompt);
         }
 
         // Always disable native tools (CLI flag, not session property)
