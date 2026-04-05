@@ -10,7 +10,7 @@ ENV PATH="/root/.local/bin:${PATH}"
 
 # Clone and install bridge
 WORKDIR /app
-RUN git clone https://github.com/kuniseichi/openclaw-claude-bridge.git . && \
+RUN git clone https://github.com/brizenchi/openclaw-claude-bridge.git . && \
     npm install
 
 # Skip onboarding
