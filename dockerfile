@@ -16,12 +16,10 @@ ENV PATH="/home/appuser/.local/bin:${PATH}"
 # Skip onboarding (appuser's home)
 RUN echo '{"hasCompletedOnboarding":true}' > /home/appuser/.claude.json
 
+# Clone and install bridge
 WORKDIR /app
-
-# Copy bridge source from build context (no git clone needed)
-COPY package*.json ./
-COPY src ./src
-RUN npm install
+RUN git clone https://github.com/brizenchi/openclaw-claude-bridge.git . && \
+    npm install
 
 EXPOSE 3456 3458
 
