@@ -7,8 +7,8 @@ const API_PORT    = parseInt(process.env.OPENCLAW_BRIDGE_PORT)    || 3456;
 const STATUS_PORT = parseInt(process.env.OPENCLAW_BRIDGE_STATUS_PORT) || 3458;
 
 // API server — localhost only (OpenClaw access)
-const apiServer = http.createServer(app).listen(API_PORT, '127.0.0.1', () => {
-    console.log(`[openclaw-claude-bridge] API     → http://127.0.0.1:${API_PORT}`);
+const apiServer = http.createServer(app).listen(API_PORT, '0.0.0.0', () => {
+    console.log(`[openclaw-claude-bridge] API     → http://0.0.0.0:${API_PORT}`);
 });
 
 // Status server — all interfaces (LAN access for dashboard)
